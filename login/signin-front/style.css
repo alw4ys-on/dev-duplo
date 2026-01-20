@@ -1,0 +1,17 @@
+body {
+    background-color: rgb(28, 28, 37);
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+label {
+    display: block;
+}
+
+div {
+    display: block;
+    width: auto;
+    height: auto;
+    align-items: center;
+    justify-items: center;
+}
