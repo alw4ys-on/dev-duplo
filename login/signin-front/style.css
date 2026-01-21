@@ -15,3 +15,22 @@ div {
     align-items: center;
     justify-items: center;
 }
+
+nav a{
+    
+    color: white;
+    text-decoration: none;
+    :visited {
+        color: white;
+    }
+    
+    
+}
+
+nav a:hover {
+    color: rgb(199, 199, 199);
+}
+
+nav a:active {
+    color: rgb(223, 223, 223);
+}
