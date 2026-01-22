@@ -1,18 +1,27 @@
 {
   "name": "login",
-  "version": "0.1.1",
-  "description": "",
+  "version": "0.2.0",
+  "description": "Sistema de login e cadastro",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "loginpage"
+    "login",
+    "authentication",
+    "mysql",
+    "express"
   ],
   "author": "alwayson",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "express": "^5.2.1",
     "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
   }
 }

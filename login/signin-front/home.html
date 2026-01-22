@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +10,35 @@
     <header>
         <nav>
             <a href="login.html">Login</a> |
-            <a href="index.html">Sign In</a>
+            <a href="index.html">Cadastrar</a>
         </nav>
     </header>
+    
+    <main>
+        <div class="container">
+            <h1>Página Inicial</h1>
+            <div id="user-info" class="user-info hidden">
+                <p>Bem-vindo, <span id="username"></span>!</p>
+                <button id="logout-btn" class="btn-logout">Sair</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // verifica se tem usuário logado
+        const userInfo = localStorage.getItem('user');
+        
+        if (userInfo) {
+            const user = JSON.parse(userInfo);
+            document.getElementById('username').textContent = user.nickname;
+            document.getElementById('user-info').classList.remove('hidden');
+        }
+
+        // logout
+        document.getElementById('logout-btn')?.addEventListener('click', () => {
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        });
+    </script>
 </body>
 </html>

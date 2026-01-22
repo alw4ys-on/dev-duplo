@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,9 +9,47 @@
 <body>
     <header>
         <nav>
-            <a href="index.html">Sign In</a> |
+            <a href="index.html">Cadastrar</a> |
             <a href="home.html">Home</a>
         </nav>
     </header>
+    <main>
+        <div class="container">
+            <h1>Bem-Vindo de Volta</h1>
+            <form id="login-form" method="POST">
+                <div class="input-group">
+                    <label for="nickname">Nome de usuário:</label>
+                    <input 
+                        type="text" 
+                        name="nickname" 
+                        id="nickname"
+                        placeholder="seu_nick"
+                        required
+                        autocomplete="username">
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Senha:</label>
+                    <input 
+                        type="password" 
+                        name="password" 
+                        id="password" 
+                        placeholder="*********"
+                        required
+                        autocomplete="current-password">
+                </div>
+                
+                <button type="submit" class="btn-submit">Entrar</button>
+                
+                <p class="form-footer">
+                    Não tem uma conta? <a href="index.html">Cadastre-se</a>
+                </p>
+            </form>
+            
+            <div id="message" class="message hidden"></div>
+        </div>
+    </main>
+    
+    <script src="script.js"></script>
 </body>
 </html>

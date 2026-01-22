@@ -1,14 +1,39 @@
-// dor de cabeça
+requestAnimationFrame('dotenv').config();
+const mysql = require('mysql');
 
-const sql = require('mysql');
-
-let con = sql.createConnection({
-  host: "localhost",
-  user: "yourusername",
-  password: "yourpassword"
+// pool de conexões ao invés de conexão única - muito mais eficiente
+// evita ficar abrindo/fechando conexão toda hora
+const pool = mysql.createPool({
+  connectionLimit: 10, // max 10 conexões simultâneas
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  waitForConnections: true,
+  queueLimit: 0
 });
 
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
+// helper pra não ficar repetindo código
+const query = (sql, params) => {
+  return new Promise((resolve, reject) => {
+    pool.query(sql, params, (err, results) => {
+      if (err) {
+        console.error('Erro na query:', err);
+      return reject(err)
+    }
+    resolve(results);
+    });
+  });
+};
+
+// testa se a conexão ta funcionando quando inicializa
+pool.getConnection((err, connection) => {
+  if (err) {
+    console.error('Erro ao conectar no MySQL:', err.message);
+    return;
+}
+console.log('MySQL conectado');
+connection.release();
 });
+
+module.exports = { pool, query };
