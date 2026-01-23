@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEVEL_2_CRYPTOGRAPHY</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .challenge-box {
+            background: rgba(0, 255, 65, 0.05);
+            border: 2px solid var(--terminal-green);
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .challenge-box::before {
+            content: '[LEVEL 2]';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--terminal-bg);
+            padding: 0 10px;
+            color: var(--terminal-green);
+            font-weight: bold;
+        }
+        
+        .encrypted-message {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 2px solid var(--danger);
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            color: var(--danger);
+            text-align: center;
+            letter-spacing: 2px;
+            word-break: break-all;
+        }
+        
+        .cipher-step {
+            background: rgba(0, 255, 65, 0.05);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--terminal-green);
+        }
+        
+        .tool-link {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background: transparent;
+            border: 2px solid var(--terminal-green);
+            color: var(--terminal-green);
+            text-decoration: none;
+            font-family: 'VT323', monospace;
+            font-size: 16px;
+            margin: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .tool-link:hover {
+            background: var(--terminal-green);
+            color: var(--terminal-bg);
+        }
+        
+        .password-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--terminal-green);
+            color: var(--terminal-green);
+            font-family: 'VT323', monospace;
+            font-size: 18px;
+            text-transform: uppercase;
+            margin: 1rem 0;
+        }
+        
+        .submit-btn {
+            background: transparent;
+            border: 3px solid var(--terminal-green);
+            color: var(--terminal-green);
+            padding: 0.8rem 2rem;
+            font-family: 'VT323', monospace;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: var(--terminal-green);
+            color: var(--terminal-bg);
+        }
+        
+        .message {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid;
+            display: none;
+        }
+        
+        .message.error {
+            border-color: var(--danger);
+            color: var(--danger);
+            background: rgba(255, 0, 60, 0.1);
+        }
+        
+        .message.success {
+            border-color: var(--terminal-green);
+            color: var(--terminal-green);
+            background: rgba(0, 255, 65, 0.1);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(0, 255, 65, 0.2);
+            margin-bottom: 2rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            width: 50%;
+            background: var(--terminal-green);
+        }
+        
+        .mrrobot-reference {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid #e74c3c;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="crt-overlay"></div>
+    <div class="scanlines"></div>
+    
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <span class="terminal-title">DAEDALUS::LEVEL_2::CRYPTOGRAPHY</span>
+            <div class="terminal-controls">
+                <span class="control-btn close"></span>
+                <span class="control-btn minimize"></span>
+                <span class="control-btn maximize"></span>
+            </div>
+        </div>
+        
+        <div class="terminal-body">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            
+            <div class="ascii-art" style="font-size: 9px;">
+ _____ _      _      _____ ___ _____    _    _     ____  _____ ____  ____   ___  _   _ 
+| ____| |    | |    |_ _\ \/ /|_   _|  / \  | |   |  _ \| ____|  _ \/ ___| / _ \| \ | |
+|  _| | |    | |     | | \  /   | |   / _ \ | |   | | | |  _| | |_) \___ \| | | |  \| |
+| |___| |___ | |___  | | /  \   | |  / ___ \| |___| |_| | |___|  _ < ___) | |_| | |\  |
+|_____|_____|_____||___/_/\_\  |_| /_/   \_\_____|____/|_____|_| \_\____/ \___/|_| \_|
+            </div>
+            
+            <div class="boot-sequence">
+                <p class="boot-line">[<span class="status-ok">OK</span>] Level 1 clearance verified</p>
+                <p class="boot-line">[<span class="status-ok">OK</span>] Loading cryptographic modules...</p>
+                <p class="boot-line">[<span class="status-warn">WARN</span>] Encrypted transmission intercepted</p>
+                <p>&nbsp;</p>
+                <p class="system-msg">╔════════════════════════════════════════════════════════════╗</p>
+                <p class="system-msg">║  LEVEL 2: BREAK THE CIPHER                                ║</p>
+                <p class="system-msg">║                                                            ║</p>
+                <p class="system-msg">║  "Encryption is not enough." - Elliot Alderson            ║</p>
+                <p class="system-msg">║  Reference: Mr. Robot (2015-2019)                         ║</p>
+                <p class="system-msg">╚════════════════════════════════════════════════════════════╝</p>
+            </div>
+            
+            <div class="mrrobot-reference">
+                <p><strong>CASE FILE: ELLIOT ALDERSON</strong></p>
+                <p>Subject: Cybersecurity engineer / Vigilante hacker</p>
+                <p>Affiliation: fsociety, Dark Army (former)</p>
+                <p>Skills: Social engineering, malware development, encryption</p>
+                <p>Target: E Corp (Evil Corp) financial infrastructure</p>
+                <p>&nbsp;</p>
+                <p style="font-style: italic;">"Hello, friend. Are you a one or a zero?"</p>
+            </div>
+            
+            <div class="challenge-box">
+                <p style="margin-bottom: 1rem;"><strong>INTERCEPTED MESSAGE:</strong></p>
+                <p>A secure communication from fsociety was intercepted.</p>
+                <p>The message uses multi-layer encryption: Base64 → ROT13</p>
+                
+                <div class="encrypted-message">
+                    RWx5dmJnX05xcmVlZmJh
+                </div>
+                
+                <div class="cipher-step">
+                    <p><strong>STEP 1: BASE64 DECODE</strong></p>
+                    <p>First layer uses Base64 encoding</p>
+                    <p>Use an online Base64 decoder or terminal command</p>
+                    <p style="color: var(--text-dim); font-size: 14px; margin-top: 0.5rem;">Base64 uses A-Z, a-z, 0-9, +, / characters</p>
+                </div>
+                
+                <div class="cipher-step">
+                    <p><strong>STEP 2: ROT13 DECODE</strong></p>
+                    <p>After Base64, apply ROT13 substitution</p>
+                    <p>Each letter shifts 13 positions in alphabet</p>
+                    <p style="color: var(--text-dim); font-size: 14px; margin-top: 0.5rem;">A→N, B→O, C→P, etc.</p>
+                </div>
+                
+                <div style="margin: 2rem 0; text-align: center;">
+                    <p style="margin-bottom: 1rem;"><strong>DECRYPTION TOOLS:</strong></p>
+                    <a href="../tools/cipher_tool.html" target="_blank" class="tool-link">🔐 Multi-Cipher Tool</a>
+                    <a href="https://www.base64decode.org/" target="_blank" class="tool-link">🌐 Base64 Decoder</a>
+                    <a href="https://rot13.com/" target="_blank" class="tool-link">🔄 ROT13 Decoder</a>
+                </div>
+                
+                <form id="password-form" style="margin-top: 2rem;">
+                    <label for="password">DECRYPTED PASSWORD:</label>
+                    <input 
+                        type="text" 
+                        id="password" 
+                        class="password-input"
+                        placeholder="FINAL_DECRYPTED_MESSAGE"
+                        required>
+                    <br>
+                    <button type="submit" class="submit-btn">DECRYPT</button>
+                </form>
+                
+                <div id="message" class="message"></div>
+                
+                <div style="margin-top: 2rem; padding: 1rem; border-left: 4px solid var(--text-dim); color: var(--text-dim);">
+                    <p><strong>SOLUTION PATH:</strong></p>
+                    <p>1. RWx5dmJnX05xcmVlZmJh (Base64)</p>
+                    <p>2. Decode Base64 → Elyvbg_Nqrreoba</p>
+                    <p>3. Apply ROT13 → ELLIOT_ALDERSON</p>
+                    <p>&nbsp;</p>
+                    <p>Expected format: FIRST_LAST (all caps)</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 2rem; padding: 1rem; background: rgba(255, 170, 0, 0.1); border: 1px solid var(--warning);">
+                <p style="color: var(--warning);"><strong>🔍 FORENSICS LOG:</strong></p>
+                <p style="color: var(--text-dim);">Encryption detected: Multi-layer obfuscation</p>
+                <p style="color: var(--text-dim);">Sender: fsociety@protonmail.com</p>
+                <p style="color: var(--text-dim);">Recipient: mr_robot@temp-mail.org</p>
+                <p style="color: var(--text-dim);">Timestamp: 2015-06-24 05:09:00 EST</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('password-form');
+        const message = document.getElementById('message');
+        const correctPassword = 'ELLIOT_ALDERSON';
+        let attempts = 3;
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const input = document.getElementById('password').value.toUpperCase().trim();
+            
+            if (input === correctPassword) {
+                message.className = 'message success';
+                message.style.display = 'block';
+                message.innerHTML = `
+                    <p><strong>[CIPHER BROKEN]</strong></p>
+                    <p>Message successfully decrypted.</p>
+                    <p>"Hello, friend. You're good at this."</p>
+                    <p>Proceeding to Level 3: OSINT...</p>
+                `;
+                
+                localStorage.setItem('daedalus_progress', '3');
+                localStorage.setItem('level2_completed', 'true');
+                
+                setTimeout(() => {
+                    window.location.href = 'level3_osint.html';
+                }, 3000);
+            } else {
+                attempts--;
+                message.className = 'message error';
+                message.style.display = 'block';
+                
+                if (attempts > 0) {
+                    message.innerHTML = `
+                        <p><strong>[DECRYPTION FAILED]</strong></p>
+                        <p>Wrong password. ${attempts} attempt(s) remaining.</p>
+                        <p>Hint: Follow both steps - Base64 first, then ROT13.</p>
+                    `;
+                } else {
+                    message.innerHTML = `
+                        <p><strong>[ACCESS DENIED]</strong></p>
+                        <p>Multiple failed decryption attempts detected.</p>
+                        <p>Connection terminated...</p>
+                    `;
+                    
+                    setTimeout(() => {
+                        window.location.href = '../index.html';
+                    }, 3000);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

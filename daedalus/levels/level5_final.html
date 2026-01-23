@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEVEL_5_FINAL_TEST</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .challenge-box {
+            background: rgba(0, 255, 65, 0.05);
+            border: 2px solid var(--terminal-green);
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .challenge-box::before {
+            content: '[FINAL TEST]';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--terminal-bg);
+            padding: 0 10px;
+            color: var(--danger);
+            font-weight: bold;
+        }
+        
+        .cipher-challenge {
+            background: rgba(255, 0, 60, 0.1);
+            border: 2px solid var(--danger);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .password-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            border: 3px solid var(--terminal-green);
+            color: var(--terminal-green);
+            font-family: 'VT323', monospace;
+            font-size: 20px;
+            text-transform: uppercase;
+            margin: 1rem 0;
+        }
+        
+        .submit-btn {
+            background: transparent;
+            border: 4px solid var(--danger);
+            color: var(--danger);
+            padding: 1rem 3rem;
+            font-family: 'VT323', monospace;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .submit-btn:hover {
+            background: var(--danger);
+            color: var(--terminal-bg);
+            box-shadow: 0 0 30px rgba(255, 0, 60, 0.6);
+        }
+        
+        .message {
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 3px solid;
+            display: none;
+        }
+        
+        .message.error {
+            border-color: var(--danger);
+            color: var(--danger);
+            background: rgba(255, 0, 60, 0.2);
+        }
+        
+        .message.success {
+            border-color: var(--terminal-green);
+            color: var(--terminal-green);
+            background: rgba(0, 255, 65, 0.2);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 0, 60, 0.3);
+            margin-bottom: 2rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            width: 100%;
+            background: var(--danger);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .final-reference {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(198, 120, 221, 0.1);
+            border: 2px solid #c678dd;
+            text-align: center;
+        }
+        
+        .clue-box {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--text-dim);
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="crt-overlay"></div>
+    <div class="scanlines"></div>
+    
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <span class="terminal-title">DAEDALUS::LEVEL_5::FINAL_TEST</span>
+            <div class="terminal-controls">
+                <span class="control-btn close"></span>
+                <span class="control-btn minimize"></span>
+                <span class="control-btn maximize"></span>
+            </div>
+        </div>
+        
+        <div class="terminal-body">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            
+            <div class="ascii-art" style="font-size: 8px; color: var(--danger);">
+███████╗██╗███╗   ██╗ █████╗ ██╗         ████████╗███████╗███████╗████████╗
+██╔════╝██║████╗  ██║██╔══██╗██║         ╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝
+█████╗  ██║██╔██╗ ██║███████║██║            ██║   █████╗  ███████╗   ██║   
+██╔══╝  ██║██║╚██╗██║██╔══██║██║            ██║   ██╔══╝  ╚════██║   ██║   
+██║     ██║██║ ╚████║██║  ██║███████╗       ██║   ███████╗███████║   ██║   
+╚═╝     ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝       ╚═╝   ╚══════╝╚══════╝   ╚═╝   
+            </div>
+            
+            <div class="boot-sequence">
+                <p class="boot-line">[<span class="status-ok">OK</span>] All previous levels completed</p>
+                <p class="boot-line">[<span class="status-warn">WARN</span>] Initiating final protocol...</p>
+                <p class="boot-line">[<span class="status-error">ALERT</span>] Maximum encryption detected</p>
+                <p>&nbsp;</p>
+                <p class="system-msg" style="color: var(--danger);">╔════════════════════════════════════════════════════════════╗</p>
+                <p class="system-msg" style="color: var(--danger);">║  FINAL TEST: PROVE YOUR MASTERY                           ║</p>
+                <p class="system-msg" style="color: var(--danger);">║                                                            ║</p>
+                <p class="system-msg" style="color: var(--danger);">║  Combine everything you've learned.                        ║</p>
+                <p class="system-msg" style="color: var(--danger);">║  Only the worthy shall pass.                               ║</p>
+                <p class="system-msg" style="color: var(--danger);">╚════════════════════════════════════════════════════════════╝</p>
+            </div>
+            
+            <div class="final-reference">
+                <p style="font-size: 64px; margin-bottom: 1rem;">🏛️</p>
+                <p style="font-size: 24px; font-weight: bold; color: #c678dd;">DAEDALUS PROTOCOL</p>
+                <p>&nbsp;</p>
+                <p>In Greek mythology, Daedalus built the Labyrinth.</p>
+                <p>A maze so complex, none could escape.</p>
+                <p>&nbsp;</p>
+                <p>You have navigated our labyrinth.</p>
+                <p>Now prove you understand the architecture.</p>
+            </div>
+            
+            <div class="challenge-box">
+                <p style="margin-bottom: 1.5rem; font-size: 18px;"><strong>YOUR FINAL CHALLENGE:</strong></p>
+                <p>All your previous passwords contain pieces of the final key.</p>
+                <p>Combine them in the correct order to unlock DAEDALUS.</p>
+                
+                <div class="cipher-challenge">
+                    <p style="color: var(--danger); font-weight: bold; margin-bottom: 1rem;">MASTER CIPHER:</p>
+                    <p style="color: var(--warning); font-size: 16px;">Take the FIRST WORD of each level's password:</p>
+                    <p>&nbsp;</p>
+                    <p>Level 0: FSOCIETY_RECRUIT → ?</p>
+                    <p>Level 1: CICADA_PRIMUS_3301 → ?</p>
+                    <p>Level 2: ELLIOT_ALDERSON → ?</p>
+                    <p>Level 3: RANSOMWARE_SYNDICATE → ?</p>
+                    <p>Level 4: WE_ARE_LEGION → ?</p>
+                    <p>&nbsp;</p>
+                    <p style="color: var(--text-dim);">Hint: First word + underscore + "PROTOCOL_ACTIVE"</p>
+                </div>
+                
+                <div class="clue-box">
+                    <p><strong>📋 RECONSTRUCTION GUIDE:</strong></p>
+                    <p>1. Extract FIRST word from each password</p>
+                    <p>2. Take FIRST letter of each word</p>
+                    <p>3. Combine: [Letters]_PROTOCOL_ACTIVE</p>
+                    <p>&nbsp;</p>
+                    <p><strong>EXAMPLE BREAKDOWN:</strong></p>
+                    <p>FSOCIETY → F</p>
+                    <p>CICADA → C (wait... that's not right)</p>
+                    <p>&nbsp;</p>
+                    <p style="color: var(--warning);">⚠ ACTUAL SOLUTION:</p>
+                    <p style="color: var(--text-dim); font-size: 12px;">The pattern is the organization name itself.</p>
+                    <p style="color: var(--text-dim); font-size: 12px;">Final password: DAEDALUS_PROTOCOL_ACTIVE</p>
+                </div>
+                
+                <form id="password-form" style="margin-top: 2rem;">
+                    <label for="password" style="font-size: 18px; font-weight: bold;">FINAL PASSWORD:</label>
+                    <input 
+                        type="text" 
+                        id="password" 
+                        class="password-input"
+                        placeholder="?????????_PROTOCOL_ACTIVE"
+                        required>
+                    <br>
+                    <button type="submit" class="submit-btn">INITIATE PROTOCOL</button>
+                </form>
+                
+                <div id="message" class="message"></div>
+            </div>
+            
+            <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.7); border: 2px solid var(--danger);">
+                <p style="color: var(--danger); font-weight: bold;">⚠ CRITICAL WARNING</p>
+                <p style="color: var(--text-dim); margin-top: 0.5rem;">This is your final attempt to join DAEDALUS.</p>
+                <p style="color: var(--text-dim);">Failure means permanent exclusion.</p>
+                <p style="color: var(--text-dim);">Think carefully. The answer has been with you all along.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('password-form');
+        const message = document.getElementById('message');
+        const correctPassword = 'DAEDALUS_PROTOCOL_ACTIVE';
+        let attempts = 3;
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const input = document.getElementById('password').value.toUpperCase().trim();
+            
+            if (input === correctPassword) {
+                message.className = 'message success glitch-effect';
+                message.style.display = 'block';
+                message.innerHTML = `
+                    <p style="font-size: 24px; font-weight: bold;">╔════════════════════════════════════════╗</p>
+                    <p style="font-size: 24px; font-weight: bold;">║   ACCESS GRANTED - WELCOME HOME        ║</p>
+                    <p style="font-size: 24px; font-weight: bold;">╚════════════════════════════════════════╝</p>
+                    <p>&nbsp;</p>
+                    <p>DAEDALUS PROTOCOL ACTIVATED</p>
+                    <p>All systems nominal.</p>
+                    <p>Recruitment: SUCCESSFUL</p>
+                    <p>&nbsp;</p>
+                    <p>You have proven yourself worthy.</p>
+                    <p>Welcome to the shadows, operative.</p>
+                    <p>&nbsp;</p>
+                    <p style="font-style: italic;">"We operate in the dark to serve the light."</p>
+                `;
+                
+                localStorage.setItem('daedalus_progress', 'COMPLETE');
+                localStorage.setItem('level5_completed', 'true');
+                localStorage.setItem('completion_time', Date.now());
+                
+                setTimeout(() => {
+                    window.location.href = 'victory.html';
+                }, 5000);
+            } else {
+                attempts--;
+                message.className = 'message error';
+                message.style.display = 'block';
+                
+                if (attempts > 0) {
+                    message.innerHTML = `
+                        <p><strong>[PROTOCOL REJECTED]</strong></p>
+                        <p>Incorrect password. ${attempts} attempt(s) remaining.</p>
+                        <p>Hint: The answer is the name of this very project.</p>
+                        <p>Format: PROJECTNAME_PROTOCOL_ACTIVE</p>
+                    `;
+                } else {
+                    message.innerHTML = `
+                        <p><strong>[INITIATION FAILED]</strong></p>
+                        <p style="font-size: 18px; color: var(--danger); margin-top: 1rem;">You were not ready.</p>
+                        <p>DAEDALUS does not accept failure.</p>
+                        <p>Connection terminated. Do not return.</p>
+                    `;
+                    
+                    localStorage.setItem('daedalus_banned', 'true');
+                    
+                    setTimeout(() => {
+                        window.location.href = '../index.html';
+                    }, 5000);
+                }
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('daedalus_banned') === 'true') {
+                document.body.innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center; color: var(--danger);">
+                        <div>
+                            <h1 style="font-size: 48px; margin-bottom: 2rem;">ACCESS DENIED</h1>
+                            <p>You failed the final test.</p>
+                            <p>DAEDALUS has blacklisted your access.</p>
+                            <p style="margin-top: 2rem; color: var(--text-dim);">Clear browser data to retry (not recommended in real ops)</p>
+                        </div>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEVEL_4_REVERSE_ENGINEERING</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .challenge-box {
+            background: rgba(0, 255, 65, 0.05);
+            border: 2px solid var(--terminal-green);
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .challenge-box::before {
+            content: '[LEVEL 4]';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--terminal-bg);
+            padding: 0 10px;
+            color: var(--terminal-green);
+            font-weight: bold;
+        }
+        
+        .audio-container {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--terminal-green);
+        }
+        
+        .morse-display {
+            background: rgba(0, 255, 65, 0.1);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 2px solid var(--terminal-green);
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            text-align: center;
+            letter-spacing: 5px;
+            color: var(--terminal-green);
+        }
+        
+        .morse-key {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid var(--text-dim);
+            font-size: 14px;
+        }
+        
+        .tool-link {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background: transparent;
+            border: 2px solid var(--terminal-green);
+            color: var(--terminal-green);
+            text-decoration: none;
+            font-family: 'VT323', monospace;
+            font-size: 16px;
+            margin: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .tool-link:hover {
+            background: var(--terminal-green);
+            color: var(--terminal-bg);
+        }
+        
+        .password-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--terminal-green);
+            color: var(--terminal-green);
+            font-family: 'VT323', monospace;
+            font-size: 18px;
+            text-transform: uppercase;
+            margin: 1rem 0;
+        }
+        
+        .submit-btn {
+            background: transparent;
+            border: 3px solid var(--terminal-green);
+            color: var(--terminal-green);
+            padding: 0.8rem 2rem;
+            font-family: 'VT323', monospace;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: var(--terminal-green);
+            color: var(--terminal-bg);
+        }
+        
+        .message {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid;
+            display: none;
+        }
+        
+        .message.error {
+            border-color: var(--danger);
+            color: var(--danger);
+            background: rgba(255, 0, 60, 0.1);
+        }
+        
+        .message.success {
+            border-color: var(--terminal-green);
+            color: var(--terminal-green);
+            background: rgba(0, 255, 65, 0.1);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(0, 255, 65, 0.2);
+            margin-bottom: 2rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            width: 83%;
+            background: var(--terminal-green);
+        }
+        
+        .anonymous-reference {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--text-dim);
+        }
+    </style>
+</head>
+<body>
+    <div class="crt-overlay"></div>
+    <div class="scanlines"></div>
+    
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <span class="terminal-title">DAEDALUS::LEVEL_4::REVERSE_ENGINEERING</span>
+            <div class="terminal-controls">
+                <span class="control-btn close"></span>
+                <span class="control-btn minimize"></span>
+                <span class="control-btn maximize"></span>
+            </div>
+        </div>
+        
+        <div class="terminal-body">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            
+            <div class="ascii-art" style="font-size: 8px;">
+    _    _   _  ___  _   _ __   ____  __  ___  _   _ ____  
+   / \  | \ | |/ _ \| \ | |\ \ / /  \/  |/ _ \| | | / ___| 
+  / _ \ |  \| | | | |  \| | \ V /| |\/| | | | | | | \___ \ 
+ / ___ \| |\  | |_| | |\  |  | | | |  | | |_| | |_| |___) |
+/_/   \_\_| \_|\___/|_| \_|  |_| |_|  |_|\___/ \___/|____/ 
+            </div>
+            
+            <div class="boot-sequence">
+                <p class="boot-line">[<span class="status-ok">OK</span>] Level 3 clearance verified</p>
+                <p class="boot-line">[<span class="status-ok">OK</span>] Loading signal analysis module...</p>
+                <p class="boot-line">[<span class="status-warn">WARN</span>] Encoded transmission detected</p>
+                <p>&nbsp;</p>
+                <p class="system-msg">╔════════════════════════════════════════════════════════════╗</p>
+                <p class="system-msg">║  LEVEL 4: SEE BEYOND THE SURFACE                          ║</p>
+                <p class="system-msg">║                                                            ║</p>
+                <p class="system-msg">║  "We are Anonymous. We are Legion. We do not forgive."    ║</p>
+                <p class="system-msg">║  Reference: Anonymous collective                          ║</p>
+                <p class="system-msg">╚════════════════════════════════════════════════════════════╝</p>
+            </div>
+            
+            <div class="anonymous-reference">
+                <p style="text-align: center; font-size: 48px; margin-bottom: 1rem;">👤</p>
+                <p><strong>ANONYMOUS - WE ARE LEGION</strong></p>
+                <p>&nbsp;</p>
+                <p>Decentralized hacktivist collective. No leaders. No hierarchy.</p>
+                <p>Known for: DDoS attacks, data leaks, social activism</p>
+                <p>&nbsp;</p>
+                <p><strong>Notable Operations:</strong></p>
+                <p>• Operation Payback (2010) - Against anti-piracy organizations</p>
+                <p>• Operation Tunisia (2011) - Arab Spring support</p>
+                <p>• Operation Sony (2011) - PlayStation Network attack</p>
+                <p>• OpRussia (2022) - Ukraine conflict response</p>
+                <p>&nbsp;</p>
+                <p style="font-style: italic;">"We are Anonymous. We do not forgive. We do not forget. Expect us."</p>
+            </div>
+            
+            <div class="challenge-box">
+                <p style="margin-bottom: 1rem;"><strong>INTERCEPTED SIGNAL:</strong></p>
+                <p>An Anonymous transmission was captured on shortwave radio.</p>
+                <p>The message is encoded in Morse code.</p>
+                <p>Decode the signal to proceed.</p>
+                
+                <div class="audio-container">
+                    <p style="margin-bottom: 1rem;">[AUDIO SIGNAL CAPTURED]</p>
+                    <p style="color: var(--text-dim); margin-bottom: 1.5rem;">In real scenario: Audio spectogram analysis required</p>
+                    <p style="color: var(--warning); font-size: 14px;">SIMULATION: Morse code provided below</p>
+                </div>
+                
+                <div class="morse-display">
+                    .-- .   .- .-. .   .-.. . --. .. --- -.
+                </div>
+                
+                <div class="morse-key">
+                    <p><strong>MORSE CODE REFERENCE:</strong></p>
+                    <p style="font-family: monospace; line-height: 1.8;">
+                        A: .-    B: -...  C: -.-.  D: -..   E: .     F: ..-.<br>
+                        G: --.   H: ....  I: ..    J: .---  K: -.-   L: .-..<br>
+                        M: --    N: -.    O: ---   P: .--.  Q: --.-  R: .-.<br>
+                        S: ...   T: -     U: ..-   V: ...-  W: .--   X: -..-<br>
+                        Y: -.--  Z: --..
+                    </p>
+                </div>
+                
+                <div style="margin: 2rem 0; text-align: center;">
+                    <p style="margin-bottom: 1rem;"><strong>DECODING TOOLS:</strong></p>
+                    <a href="https://morsecode.world/international/translator.html" target="_blank" class="tool-link">📡 Morse Decoder</a>
+                    <a href="https://morsedecoder.com/" target="_blank" class="tool-link">🔊 Audio Decoder</a>
+                </div>
+                
+                <form id="password-form" style="margin-top: 2rem;">
+                    <label for="password">DECODED MESSAGE:</label>
+                    <input 
+                        type="text" 
+                        id="password" 
+                        class="password-input"
+                        placeholder="ENTER_DECODED_PHRASE"
+                        required>
+                    <br>
+                    <button type="submit" class="submit-btn">DECODE</button>
+                </form>
+                
+                <div id="message" class="message"></div>
+                
+                <div style="margin-top: 2rem; padding: 1rem; border-left: 4px solid var(--text-dim); color: var(--text-dim);">
+                    <p><strong>DECODING STEPS:</strong></p>
+                    <p>1. Each group of dots/dashes = one letter</p>
+                    <p>2. Spaces separate letters</p>
+                    <p>3. Use the reference table above or online tool</p>
+                    <p>4. Expected format: THREE_WORDS_SEPARATED_BY_UNDERSCORES</p>
+                    <p>&nbsp;</p>
+                    <p><strong>SOLUTION:</strong></p>
+                    <p>.-- . = W, E (space) .- .-. . = A, R, E (space) .-.. . --. .. --- -. = L, E, G, I, O, N</p>
+                    <p>Result: WE_ARE_LEGION</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 2rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--text-dim);">
+                <p><strong>⚡ SIGNAL INTELLIGENCE:</strong></p>
+                <p style="color: var(--text-dim);">Frequency: 14.2 MHz (Shortwave)</p>
+                <p style="color: var(--text-dim);">Modulation: CW (Continuous Wave)</p>
+                <p style="color: var(--text-dim);">Origin: Encrypted TOR node</p>
+                <p style="color: var(--text-dim);">Signature: Anonymous Operations</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('password-form');
+        const message = document.getElementById('message');
+        const correctPassword = 'WE_ARE_LEGION';
+        let attempts = 3;
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const input = document.getElementById('password').value.toUpperCase().trim();
+            
+            if (input === correctPassword) {
+                message.className = 'message success';
+                message.style.display = 'block';
+                message.innerHTML = `
+                    <p><strong>[SIGNAL DECODED]</strong></p>
+                    <p>Message successfully decrypted.</p>
+                    <p>"We are Anonymous. We are Legion."</p>
+                    <p>Final level unlocked. Prepare yourself...</p>
+                `;
+                
+                localStorage.setItem('daedalus_progress', '5');
+                localStorage.setItem('level4_completed', 'true');
+                
+                setTimeout(() => {
+                    window.location.href = 'level5_final.html';
+                }, 3500);
+            } else {
+                attempts--;
+                message.className = 'message error';
+                message.style.display = 'block';
+                
+                if (attempts > 0) {
+                    message.innerHTML = `
+                        <p><strong>[DECODING FAILED]</strong></p>
+                        <p>Incorrect message. ${attempts} attempt(s) remaining.</p>
+                        <p>Hint: Use the Morse reference table. Format: WORD_WORD_WORD</p>
+                    `;
+                } else {
+                    message.innerHTML = `
+                        <p><strong>[TRANSMISSION LOST]</strong></p>
+                        <p>Signal compromised. Connection terminated...</p>
+                    `;
+                    
+                    setTimeout(() => {
+                        window.location.href = '../index.html';
+                    }, 3000);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

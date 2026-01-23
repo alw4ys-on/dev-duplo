@@ -1,0 +1,319 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --terminal-green: #00ff41;
+    --terminal-bg: #0a0e0a;
+    --terminal-shadow: rgba(0, 255, 65, 0.3);
+    --text-dim: #00aa2e;
+    --danger: #ff003c;
+    --warning: #ffaa00;
+}
+
+body {
+    background: #000;
+    color: var(--terminal-green);
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    line-height: 1.4;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+    background: 
+        repeating-linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.15) 0px,
+            transparent 1px,
+            transparent 2px,
+            rgba(0, 0, 0, 0.15) 3px
+        );
+    animation: flicker 0.15s infinite;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.97; }
+    50% { opacity: 1; }
+    100% { opacity: 0.97; }
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.25) 50%
+    );
+    background-size: 100% 4px;
+    z-index: 998;
+    animation: scan 8s linear infinite;
+}
+
+@keyframes scan {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(10px); }
+}
+
+.terminal-container {
+    width: 90%;
+    max-width: 1000px;
+    height: 85vh;
+    background: var(--terminal-bg);
+    border: 3px solid var(--terminal-green);
+    box-shadow: 
+        0 0 20px var(--terminal-shadow),
+        inset 0 0 100px rgba(0, 255, 65, 0.05);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.terminal-header {
+    background: rgba(0, 255, 65, 0.1);
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--terminal-green);
+}
+
+.terminal-title {
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+
+.terminal-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.control-btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid var(--terminal-green);
+}
+
+.control-btn.close { background: var(--danger); }
+.control-btn.minimize { background: var(--warning); }
+.control-btn.maximize { background: var(--terminal-green); }
+
+.terminal-body {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+    font-size: 16px;
+    text-shadow: 0 0 5px var(--terminal-shadow);
+}
+
+.terminal-body::-webkit-scrollbar {
+    width: 10px;
+}
+
+.terminal-body::-webkit-scrollbar-track {
+    background: var(--terminal-bg);
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+    background: var(--text-dim);
+    border: 1px solid var(--terminal-green);
+}
+
+.ascii-art {
+    color: var(--terminal-green);
+    font-size: 11px;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 10px var(--terminal-shadow);
+    animation: glitch 3s infinite;
+}
+
+@keyframes glitch {
+    0%, 90%, 100% {
+        transform: translate(0);
+    }
+    92% {
+        transform: translate(-2px, 2px);
+    }
+    94% {
+        transform: translate(2px, -2px);
+    }
+    96% {
+        transform: translate(-2px, -2px);
+    }
+}
+
+.boot-sequence {
+    margin-bottom: 2rem;
+}
+
+.boot-line {
+    margin: 0.3rem 0;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.status-ok {
+    color: var(--terminal-green);
+    font-weight: bold;
+}
+
+.status-warn {
+    color: var(--warning);
+    font-weight: bold;
+}
+
+.status-error {
+    color: var(--danger);
+    font-weight: bold;
+}
+
+.system-msg {
+    color: var(--text-dim);
+    margin: 0.2rem 0;
+}
+
+.prompt-text {
+    margin: 0.5rem 0;
+}
+
+.highlight {
+    color: var(--terminal-green);
+    font-weight: bold;
+    text-shadow: 0 0 8px var(--terminal-shadow);
+}
+
+#output {
+    margin: 1rem 0;
+    min-height: 100px;
+}
+
+#output p {
+    margin: 0.3rem 0;
+}
+
+.input-line {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    position: relative;
+}
+
+.prompt {
+    color: var(--terminal-green);
+    margin-right: 0.5rem;
+    font-weight: bold;
+}
+
+.command-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--terminal-green);
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+    caret-color: transparent;
+}
+
+.cursor {
+    color: var(--terminal-green);
+    animation: blink 1s infinite;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+.error-msg {
+    color: var(--danger);
+    text-shadow: 0 0 8px rgba(255, 0, 60, 0.5);
+}
+
+.success-msg {
+    color: var(--terminal-green);
+    text-shadow: 0 0 8px var(--terminal-shadow);
+    font-weight: bold;
+}
+
+.warning-msg {
+    color: var(--warning);
+    text-shadow: 0 0 8px rgba(255, 170, 0, 0.5);
+}
+
+.typing {
+    overflow: hidden;
+    border-right: 2px solid var(--terminal-green);
+    white-space: nowrap;
+    animation: typing 2s steps(40) forwards;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+.glitch-effect {
+    animation: glitch-anim 0.3s infinite;
+}
+
+@keyframes glitch-anim {
+    0% {
+        transform: translate(0);
+        color: var(--terminal-green);
+    }
+    33% {
+        transform: translate(-2px, 2px);
+        color: var(--danger);
+    }
+    66% {
+        transform: translate(2px, -2px);
+        color: var(--warning);
+    }
+    100% {
+        transform: translate(0);
+        color: var(--terminal-green);
+    }
+}
+
+@media (max-width: 768px) {
+    .terminal-container {
+        width: 95%;
+        height: 90vh;
+    }
+    
+    .terminal-body {
+        font-size: 14px;
+        padding: 1rem;
+    }
+    
+    .ascii-art {
+        font-size: 8px;
+    }
+}
