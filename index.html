@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escolha o Projeto</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <style>
+        * {
+            margin: 0;
+        }
         body {
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
             background-color: rgb(12, 10, 22);
@@ -14,6 +16,10 @@
             text-align: center;
         }
         
+        nav {
+            margin-top: 5px;
+        }
+
         a {
             margin: 10px;
             color: aqua;
@@ -27,16 +33,62 @@
             margin: 30px;
             color: aquamarine;
         }
+
+        header {
+            margin-top: 20px;
+        }
+
+        main {
+            justify-self: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+            height: 600px;
+            width: 600px;
+            background-color: rgb(23, 31, 41);
+            border-radius: 15px;
+        }
+        
+        footer {
+            display: flex;
+            justify-content: end;
+            margin: 0px 15px;
+        }
+        
+        img {
+            border-radius: 35px;
+        }
         
     </style>
 </head>
 <body>
-    <h1>SELECIONE O PROJETO</h1>
-    <nav>
-        <a href="Choise/">CHOISE-LEO</a> |
-        <a href="login/signin-front/index.html">LOGIN-ARTHUR</a> |
-        <a href="daedalus/index.html">BRENNER</a>
-    </nav>
-    
+    <header>
+        <h1>SELECIONE O PROJETO</h1>
+        <nav>
+            <small>
+                PINE |
+                ALWAYS |
+                BJOHN
+            </small>
+        </nav>
+    </header>
+    <main>
+        <div>
+            <nav>
+                <a href="Choise/">CHOISE</a> |
+                <a href="login/signin-front/">LOGIN</a> |
+                <a href="daedalus/">DAEDALUS</a>
+            </nav>
+            <nav>
+                <a href="#">PINE</a> |   
+                <a href="node-aprendizado/">NODE-APRENDIZADO</a> |
+                <a href="#">BJOHN</a>
+            </nav>
+        </div>
+    </main>
+    <footer>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmve3LlOi0V3sXXfZczxWmm5M4xNb0BvotIQ&s" alt="abacaxi bolado" height="100px">
+    </footer>
 </body>
 </html>

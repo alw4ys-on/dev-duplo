@@ -34,16 +34,17 @@ div {
 }
 
 
-nav a {
-    transition: all 0.5s ease;
+ a {
+    transition: ease 200ms;
     color: rgb(211, 212, 255);
+    background: transparent;
     text-decoration: none;
     text-align: center;
     padding: 0.5rem 1rem;
     border-radius: 4rem;
 }
 
-nav a:hover {
+ a:hover {
     color: rgb(255, 255, 255);
     background: linear-gradient(130deg, #6b6388 0%, #5d5f5e 100%);
 }
