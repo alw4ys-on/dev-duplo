@@ -1,6 +1,20 @@
-import { thisThing } from './thisthing.js';
 
-const isso = new thisThing('calvo', 'supremo');
-let res = isso.thisthing();
+async function run(file) {
+    
+    switch (file) {
+        case 1:
+            await import('./src/thisexec.js');
+            break;
+        case 2:
+            await import('./src/thispath.js');
+            break;
+        case 3:
+            await import('./src/thisfs.js');
+            break;
+        case 4: 
+            await import('./src/test.js');
+            break;
+    }
+}
 
-console.log(res);
+run(4);
