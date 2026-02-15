@@ -34,7 +34,7 @@ div {
 }
 
 
- a {
+ button {
     transition: ease 200ms;
     color: rgb(211, 212, 255);
     background: transparent;
@@ -44,7 +44,15 @@ div {
     border-radius: 4rem;
 }
 
- a:hover {
+ button:hover {
     color: rgb(255, 255, 255);
     background: linear-gradient(130deg, #6b6388 0%, #5d5f5e 100%);
+}
+
+.center-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10%;
+  width: 30%; 
 }
