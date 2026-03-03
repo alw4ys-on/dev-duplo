@@ -7,8 +7,48 @@ body {
     background-color: black;
 }
 
+main {
+    display: flex;
+    justify-content: center;
+}
+
 h1 {
+    margin-bottom: 20px;
+    text-align: center;
     color: red;
+    border-top: 1px solid red;
+    border-bottom: 1px solid red;
+}
+
+#title {
+    width: fit-content;
+    text-align: start;
+    margin-bottom: 0px;
+    padding-left: 5px;
+    border: 0px hidden;
+}
+
+#menu-bar {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid red;
+}
+
+#bar-deco {
+    margin-right: 5px;
+}
+
+#bar-deco button {
+    color: red;
+    background-color: black;
+    border: 1px outset red;
+}
+
+#main-sec {
+    height: 86vh;
+    width: 45vw;
+    border: 1px outset red;
 }
 
 #start div {
@@ -49,4 +89,27 @@ h1 {
 
 .boot-screen.remove{
     translate: 0 100vh;
+}
+
+#tools {
+    display: flex;
+}
+
+#tools a {
+    text-align: center;
+    margin: 10px;
+    color: red;
+    display: block;
+    width: 55px;
+}
+
+.icon {
+    border: 2px outset red;
+    background-color: red;
+    color: black;
+    font-size: 45px;
+}
+
+.icon:hover {
+    background-color: rgb(253, 41, 41);
 }

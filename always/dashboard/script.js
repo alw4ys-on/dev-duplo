@@ -2,6 +2,7 @@ const start = document.getElementById("start");
 const logo = document.getElementById("logo");
 const boot1 = new Audio("files/boot1.mp3");
 const boot2 = new Audio("files/boot2.mp3");
+const hover = new Audio("files/hover.mp3");
 const bootscreen = document.getElementsByClassName("boot-screen");
 
 const lines = [
@@ -52,4 +53,8 @@ async function bootAnim() {
 document.addEventListener("mousemove", function iniciar() {
     document.removeEventListener("mousemove", iniciar);
     bootAnim();
+});
+
+document.querySelectorAll('.icon').forEach(el => {
+    el.addEventListener('mouseenter', () => hover.play());
 });
