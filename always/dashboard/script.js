@@ -1,5 +1,7 @@
 const start = document.getElementById("start");
 const logo = document.getElementById("logo");
+const mainSect = document.getElementById("main-sec");
+const menuBar = document.getElementById("menu-bar")
 const boot1 = new Audio("files/boot1.mp3");
 const boot2 = new Audio("files/boot2.mp3");
 const hover = new Audio("files/hover.mp3");
@@ -11,7 +13,7 @@ const lines = [
     "Loading initial ramdisk...",
     "Linux version 6.6.0",
     "Command line: BOOT_IMAGE=/vmlinuz root=/dev/sda1 ro quiet",
-    "BIOS-provided physical RAM map:",
+    "BIOS-provided physical RAM map: 512MB OK",
     "usb 1-1: new high-speed USB device",
     "EXT4-fs (sda1): mounted filesystem with ordered data mode",
     "[  OK  ] Started Journal Service.",
@@ -58,3 +60,32 @@ document.addEventListener("mousemove", function iniciar() {
 document.querySelectorAll('.icon').forEach(el => {
     el.addEventListener('mouseenter', () => hover.play());
 });
+
+
+
+// a partir daqui o codigo é gerado por IA, dps vou fazer o meu proprio, ta tarde
+
+let isDragging = false;
+let offsetX = 0;
+let offsetY = 0;
+
+menuBar.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  offsetX = e.clientX - mainSect.offsetLeft;
+  offsetY = e.clientY - mainSect.offsetTop;
+});
+
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (isDragging) {
+    mainSect.style.left = (e.clientX - offsetX) + 'px';
+    mainSect.style.top = (e.clientY - offsetY) + 'px';
+
+  }
+});
+
+// mover a janela ultrapassa os limites do documento, criando espaço extra -- CORRIGIR
+      
